@@ -32,7 +32,7 @@ def text_node_to_html_node(text_node):
         case TextType.ITALIC_TEXT:
             return LeafNode("i", text_node.text.replace("\n", " "))
         case TextType.CODE_TEXT:
-            return LeafNode("code", text_node.text.replace("\n", " "))
+            return LeafNode("code", text_node.text.lstrip())
         case TextType.LINK:
             return LeafNode("a", text_node.text.replace("\n", " "), {"href": text_node.url})
         case TextType.IMAGE:

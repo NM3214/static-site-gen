@@ -81,8 +81,8 @@ def markdown_to_html_node(markdown):
                 children = text_to_children(text)
                 block_nodes.append(ParentNode(tag, children))
             else:
-                children = [text_node_to_html_node(TextNode(text, TextType.PLAIN_TEXT))]
-                block_nodes.append(ParentNode("pre", [ParentNode(tag, children)]))
+                child = text_node_to_html_node(TextNode(text, TextType.CODE_TEXT))
+                block_nodes.append(ParentNode("pre", [child]))
             
         else:
             match blocktype:
