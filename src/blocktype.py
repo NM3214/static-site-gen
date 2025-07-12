@@ -41,6 +41,7 @@ def block_to_block_type(block):
         if not line.startswith(f"{i}. "):
             ordered_list = False
             break
+        i += 1
     if ordered_list:
         return BlockType.ORDERED_LIST
     
@@ -56,7 +57,7 @@ def markdown_to_html_node(markdown):
                 return "p", block
             case BlockType.HEADING:
                 text = block.lstrip("#")[1:]
-                return f"h{len(block)-len(text)+1}", text
+                return f"h{len(block)-len(text)-1}", text
             case BlockType.QUOTE:
                 text = "\n".join(list(map(lambda x: x[2:], block.split("\n"))))
                 return "blockquote", text

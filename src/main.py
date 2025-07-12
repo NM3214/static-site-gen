@@ -1,10 +1,11 @@
-from textnode import TextNode, TextType
+from generate_page import generate_pages_recursive
 import os
 import shutil
 
 def main():
 
     copy_to_destination()
+
 
 
 def copy_to_destination():
@@ -31,6 +32,11 @@ def copy_to_destination():
                 shutil.copy(path, path_public)
 
     inner("")
+
+    content = current_path + "/content/"
+    template = current_path + "/template.html"
+    destination = current_path + "/public/"
+    generate_pages_recursive(content, template, destination)
 
 
 
