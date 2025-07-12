@@ -1,25 +1,38 @@
 from generate_page import generate_pages_recursive
 import os
 import shutil
+import sys
 
 def main():
 
-    copy_to_destination()
+    if len(sys.argv) > 1:
+        basepath = sys.argv[1]
+    else:
+        basepath = "/"
+    
 
 
-
-def copy_to_destination():
     current_path = os.path.abspath(".")
-    public_dir = current_path + "/public/"
-    static_dir = current_path + "/static/"
-    if os.path.exists(public_dir):
-        shutil.rmtree(public_dir)
-    os.mkdir(public_dir)
+    content = current_path + "/content/"
+    static = current_path + "/static/"
+    template = current_path + "/template.html"
+    destination = current_path + "/docs/"
+    copy_to_destination(static, destination)
+    
+    generate_pages_recursive(content, template, destination, basepath)
+
+
+
+
+def copy_to_destination(source, destination):
+    if os.path.exists(destination):
+        shutil.rmtree(destination)
+    os.mkdir(destination)
 
 
     def inner(rel_path):
-        current_path = os.path.join(static_dir, rel_path)
-        current_path_public = os.path.join(public_dir, rel_path)
+        current_path = os.path.join(source, rel_path)
+        current_path_public = os.path.join(destination, rel_path)
         contents = os.listdir(current_path)
         
         for content in contents:
@@ -33,10 +46,7 @@ def copy_to_destination():
 
     inner("")
 
-    content = current_path + "/content/"
-    template = current_path + "/template.html"
-    destination = current_path + "/public/"
-    generate_pages_recursive(content, template, destination)
+    
 
 
 
